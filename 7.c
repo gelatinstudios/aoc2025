@@ -1,10 +1,11 @@
 
 #include <stdio.h>
+#include <stdint.h>
 #include <assert.h>
 
 typedef struct {
     int pos;
-    long long timelines;
+    int64_t timelines;
 } Beam;
 
 typedef struct {
@@ -12,7 +13,7 @@ typedef struct {
     int count;
 } Beams;
 
-void add_beam(Beams *b, int pos, long long timelines) {
+void add_beam(Beams *b, int pos, int64_t timelines) {
     int i;
     for (i = 0; i < b->count; i++) {
         if (b->beams[i].pos == pos) {
@@ -29,7 +30,7 @@ int main(void) {
     static char line[4096];
     Beams beams = {0};
     int split_count;
-    long long timelines;
+    int64_t timelines;
     int i;
     char *c;
 
@@ -47,7 +48,7 @@ int main(void) {
         for (i = 0; i < beams.count; i++) {
             Beam beam = beams.beams[i];
             int n = beam.pos;
-            long long t = beam.timelines;
+            int64_t t = beam.timelines;
             if (line[n] == '^') {
                 add_beam(&b, n-1, t);
                 add_beam(&b, n+1, t);

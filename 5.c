@@ -1,22 +1,23 @@
 
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <ctype.h>
 
 #define Min(a,b) ((a)<(b)?(a):(b))
 #define Max(a,b) ((a)>(b)?(a):(b))
 
-long long ranges[4096][2];
+int64_t ranges[4096][2];
 int range_count = 0;
 
 int main(void) {
     static char line[4096];
-    long long fresh_count;
+    int64_t fresh_count;
     int collapsing;
     int i, j;
 
     while (fgets(line, sizeof(line), stdin)) {
-        long long start, end;
+        int64_t start, end;
 
         if (isspace(line[0])) break;
 
@@ -30,7 +31,7 @@ int main(void) {
     fresh_count = 0;
     while (fgets(line, sizeof(line), stdin)) {
         int fresh;
-        long long n;
+        int64_t n;
 
         if (isspace(line[0])) break;
 

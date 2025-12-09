@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <assert.h>
 
@@ -8,11 +9,11 @@ typedef struct {
     int x, y, z;
 } IV3;
 
-long long distance2(IV3 a, IV3 b) {
-    long long x = a.x - b.x;
-    long long y = a.y - b.y;
-    long long z = a.z - b.z;
-    long long result = x*x + y*y + z*z;
+int64_t distance2(IV3 a, IV3 b) {
+    int64_t x = a.x - b.x;
+    int64_t y = a.y - b.y;
+    int64_t z = a.z - b.z;
+    int64_t result = x*x + y*y + z*z;
     return result;
 }
 
@@ -40,8 +41,8 @@ typedef struct {
 int pair_dist_comp(const void *A, const void *B) {
     Pair *a = (Pair *)A;
     Pair *b = (Pair *)B;
-    long long a_dist = distance2(junctions[a->a], junctions[a->b]);
-    long long b_dist = distance2(junctions[b->a], junctions[b->b]);
+    int64_t a_dist = distance2(junctions[a->a], junctions[a->b]);
+    int64_t b_dist = distance2(junctions[b->a], junctions[b->b]);
     return a_dist < b_dist ? -1 : a_dist > b_dist;
 }
 
@@ -87,19 +88,24 @@ void add_pair(Pair p, int *circuit_max, int *circuit_count) {
 }
 
 int main(void) {
-    long long prod;
+    int64_t prod;
     int circuit_count, circuit_max;
     int i, j, n;
 
     int x, y, z;
     while (scanf("%d,%d,%d ", &x, &y, &z) > 0) {
-        IV3 v = {x, y, z};
+        IV3 v;
+        v.x = x;
+        v.y = y;
+        v.z = z;
         junctions[junction_count++] = v;
     }
 
     for (i = 0; i < junction_count; i++) {
         for (j = i+1; j < junction_count; j++) {
-            Pair p = {i, j};
+            Pair p;
+            p.a = i;
+            p.b = j;
             pairs[pair_count++] = p;
         }
     }
@@ -130,8 +136,8 @@ int main(void) {
     for (i = n; i < pair_count; i++) {
         add_pair(pairs[i], &circuit_max, &circuit_count);
         if (circuit_count == 1) {
-            long long a = junctions[pairs[i].a].x;
-            long long b = junctions[pairs[i].b].x;
+            int64_t a = junctions[pairs[i].a].x;
+            int64_t b = junctions[pairs[i].b].x;
             printf("%lld\n", a*b);
             break;
         }

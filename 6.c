@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <ctype.h>
 #include <string.h>
 #include <assert.h>
@@ -9,7 +10,7 @@ char input[4096][4096];
 char operators[4096];
 char operator_line[4096];
 int nums[4096][4096];
-long long op_nums[4096];
+int64_t op_nums[4096];
 char line[4096];
 
 int main(void) {
@@ -64,9 +65,9 @@ int main(void) {
     }
 
     {/* part 1 */
-        long long total = 0;
+        int64_t total = 0;
         for (i = 0; i < cols; i++) {
-            long long n;
+            int64_t n;
             if (operators[i] == '*') {
                 n = 1;
                 for (j = 0; j < row; j++) {
@@ -85,10 +86,10 @@ int main(void) {
     }
 
     {/* part 2 */
-        long long total = 0;
+        int64_t total = 0;
         int op_num_count = 0;
         for (i = longest_line-1; i >= 0; i--) {
-            long long op_num = 0;
+            int64_t op_num = 0;
             for (j = 0; j < row; j++) {
                 int n = (int)input[j][i];
                 if (isdigit(n)) {
@@ -98,7 +99,7 @@ int main(void) {
             }
             if (op_num) op_nums[op_num_count++] = op_num;
             if (operator_line[i] == '*') {
-                long long prod = 1;
+                int64_t prod = 1;
                 for (j = 0; j < op_num_count; j++) {
                     prod *= op_nums[j];
                 }
@@ -106,7 +107,7 @@ int main(void) {
                 op_num_count = 0;
             }
             if (operator_line[i] == '+') {
-                long long sum = 0;
+                int64_t sum = 0;
                 for (j = 0; j < op_num_count; j++) {
                     sum += op_nums[j];
                 }

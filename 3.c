@@ -1,9 +1,10 @@
 
 #include <stdio.h>
+#include <stdint.h>
 #include <ctype.h>
 
 int main(void) {
-    long long joltages[2] = {0};
+    int64_t joltages[2] = {0};
     static char line[1024];
     int part, i;
 
@@ -12,7 +13,7 @@ int main(void) {
             char *c;
             int last_index;
             int digit, digits;
-            long long joltage, mul;
+            int64_t joltage, mul;
 
             int len = 0;
             for (c = line; isdigit(*c); c++) {
@@ -38,7 +39,7 @@ int main(void) {
                         last_index = i;
                     }
                 }
-                joltage += (long long)(n-'0') * mul;
+                joltage += (int64_t)(n-'0') * mul;
                 mul /= 10;
             }
 

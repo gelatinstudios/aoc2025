@@ -1,25 +1,26 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 
 int main(void) {
     const char *delims = ", \r\n";
     char *range;
     int i;
-    long long part1 = 0;
-    long long part2 = 0;
+    int64_t part1 = 0;
+    int64_t part2 = 0;
     static char input[256*1024];
     fgets(input, sizeof(input), stdin);
 
     range = strtok(input, delims);
     while (range) {
-        long long start, end, id;
+        int64_t start, end, id;
         sscanf(range, "%lld-%lld", &start, &end);
 
         for (id = start; id <= end; id++) {
-            long long a, m;
+            int64_t a, m;
             int part, id_valid;
-            long long n = id;
+            int64_t n = id;
             int digit_count = 0;
             while (n > 0) {
                 digit_count++;
